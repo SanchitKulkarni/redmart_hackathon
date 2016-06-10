@@ -9,31 +9,31 @@ define(['app','underscore','models/product'], function (app,_) {
                  
         }); 
 
-        $scope.onradio = function(event, sel, notmatched){  
-         if (notmatched) { 
-             _.map($scope.matchedProductList, function (p){
-                  if(p.objectId === sel.product.objectId) {
-                     matchedProduct = _.find($scope.productList, function (product){
-                         return product.objectId == sel.product.objectId ;
-                     }); 
-                     p.matchedRedmartProducts = matchedProduct.matchedRedmartProducts;
-                     p.status =1;
-                  }
-            }); 
-            return true;
-         };
+        $scope.doneProducts = []
 
-         var fpProduct = _.find($scope.matchedProductList, function (p){
-             return p.objectId == sel.$parent.product.objectId  ;
-         });
+        $scope.check = function(event, sel){  
+          if(event.currentTarget.checked){
+              var found = _.findWhere($scope.doneProducts, {productID: sel.product.productID});
+              if(!found)
+                $scope.doneProducts.push(sel.product);
+          } else {
+            $scope.doneProducts.splice(_.indexOf($scope.doneProducts, _.findWhere($scope.doneProducts, { productID : sel.product.productID})), 1);
+          }
+          var v= "";
+        };
 
-         fpProduct.matchedRedmartProducts =[]
-         if(event.shiftKey){
-           event.target.checked = false;
-           return false;
-         } 
-         fpProduct = _.extend(fpProduct, {status : 0}); 
-       	 fpProduct.matchedRedmartProducts.push(  sel.redmartProduct );
-       };
+        $scope.saveNonEdited = function(){
+          var data  =  _.map($scope.doneProducts, function(product){  
+                               product.photoEditedDate = $scope.date
+                               return _.omit(product, ['$$hashKey']);   
+                       }); 
+
+          var reqobj = {"data" : data, "status" : "edited"}
+          productModel.saveEdited(reqobj).then(function(result){
+            alert("done updates");
+          })
+        }
+
+
      }]);
 }); 

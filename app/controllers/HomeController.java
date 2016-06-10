@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
+
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -54,29 +56,35 @@ public class HomeController extends Controller {
 					md.setBarcode(barcode);
 					MorphiaObject.datastore.save(md);
 				} else {
-					if (prod.getPhotoTaken() == false) {
+					if (prod.getPhotoTaken() == null ||  prod.getPhotoTaken() == false) {
 						prod.setPhotoTaken(true);
 						prod.setPhotoTakenDate(date);
 					}
 				}
 			}
-		} else if (status == "edited") {
+		} else if (status.equals("edited")) {
 			for (JsonNode json1 : json.withArray("data")) {
-				String barcode = json1.get("barcode").textValue();
+				String barcode = json1.get("productID").textValue();
 				Logger.info(barcode);
-				String date = json1.get("date").textValue();
-				String image = json1.get("image").textValue();
+				String date = json1.get("photoEditedDate").textValue();
+ 
+				// ProductInfo prod = MorphiaObject.datastore.find(ProductInfo.class).field("Selling Unit Barcode")
+				// 		.equal(barcode).get();
+				// Logger.info("Object RPC:" + prod);
+				// if (prod.getPhotoEdited() ==null || prod.getPhotoEdited() == false) {
+					 
+					UpdateOperations<ProductInfo> upOps = MorphiaObject.datastore.createUpdateOperations(ProductInfo.class);
+					upOps.set("Photo Edited", true); 
+					upOps.set("Photo Edited Date", date); 
 
-				ProductInfo prod = MorphiaObject.datastore.find(ProductInfo.class).field("Selling Unit Barcode")
-						.equal(barcode).get();
-				Logger.info("Object RPC:" + prod);
-				if (prod.getPhotoEdited() == false) {
-					prod.setPhotoEdited(true);
-					prod.setPhotoEditedDate(date);
-				}
+					Query<ProductInfo> prod = MorphiaObject.datastore.find(ProductInfo.class);	
+				    prod.field("Selling Unit Barcode").equal(barcode);
+				    MorphiaObject.datastore.update(prod, upOps);
+
+				// }
 			}
 		}
-		return ok();
+		return ok("{\"success\":true}").as("application/json");
 	}
 	public Result getAllProducts(){
 		JsonNode node=null;
@@ -91,13 +99,15 @@ public class HomeController extends Controller {
 		return ok(node).as("application/json");
 	}
 	public Result getNonEditedProducts() {
-		boolean var = request().getQueryString("edited").equals("false");
+		boolean var = request().getQueryString("edited").equals("false"); 
+
 		JsonNode node = null;
-		if (var == true) {
+		if (var == true) { 
 			Query<ProductInfo> prod = MorphiaObject.datastore.find(ProductInfo.class);
-			prod.and(prod.criteria("Photo Taken").equal(true), prod.criteria("Photo Edited").equal(false),
-					prod.criteria("Photo Uploaded").equal(false));
+			prod.and(prod.criteria("Photo Taken").equal(true), prod.criteria("Photo Edited").equal(false)
+					); 
 			node = Json.toJson(prod.asList());
+
 		}
 		return ok(node).as("application/json");
 	}

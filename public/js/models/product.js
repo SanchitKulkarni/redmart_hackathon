@@ -19,8 +19,8 @@ define(['app'], function (app) {
         });
       };
 
-      var saveEdited = function(matchedproducts, competitor) {
-        return appService.retrieve("matches/" + competitor, "POST", matchedproducts ).then(function(result){ 
+      var saveEdited = function(editeddata) {
+        return appService.retrieve("products", "POST", editeddata ).then(function(result){ 
           return result;
         }, function(err){
           return err;

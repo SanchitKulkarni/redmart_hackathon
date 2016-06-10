@@ -1,5 +1,7 @@
  <div class="leftContainer">
-    Hello
+    <a href="#/taken">Taken</a>
+    <br/>
+    <a href="#/edited">Edited</a>
 </div>
 <div class="rightContainer"> 
   <table>
@@ -12,10 +14,11 @@
     </tr>
     <tr ng-repeat="product in products" >
       <td>{{product.rpc}}</td>
-      <td>{{product.productId}}</td>
+      <td>{{product.productID}}</td>
       <td>{{product.photoTakenDate}}</td> 
       <td>{{date}}</td>
-      <td><input type="radio" name="{{product.productId}}" ng-click="onradio($event,this,false)"></td>
+      <td><input type="checkbox" name="{{product.productId}}" ng-click="check($event,this)"></td>
     </tr>
   </table>
+  <input type="submit" name="save" value="Save" ng-click="saveNonEdited()">
 </div>  

@@ -10,7 +10,7 @@ define(['app','underscore','models/product'], function (app,_) {
             }); 
             var reqobj = {"data" : obj, "status" : "taken"}
             productModel.uploadphototakencsv(reqobj).then(function(){
-              alert("Upload done");
+              $scope.uploadedproducts = $scope.csv.result 
             });
           } catch(e){
             alert('invalid csv file')
