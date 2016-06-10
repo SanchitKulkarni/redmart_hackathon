@@ -1,0 +1,83 @@
+<div class="form-container"> 
+<table style="width:100%"  style="outline: thin #de142b">
+	<tr>
+		<td ng-model="userModel">
+			{{competitor}}/{{store}} Product 
+		</td>
+		<td>
+			Redmart 1st Match
+		</td>
+		<td>
+			Redmart 2nd Match
+		</td>
+		<td>
+			Redmart 3rd Match
+		</td>
+		<td>
+			Redmart 4th Match
+		</td>
+		<td>
+			Redmart 5th Match
+		</td>
+		<td>
+			Redmart 6th Match
+		</td>
+		<td>
+			Redmart 7th Match
+		</td>
+		<td>
+			Redmart 8th Match
+		</td>
+		<td>
+			Redmart 9th Match
+		</td>
+		<td>
+			Redmart 10th Match
+		</td>
+	</tr>
+	 
+
+	<tr ng-repeat="product in productList" style="outline: thin solid #de142b">
+	    <td> 
+	    	<table class="tableclass">
+				<tr><td><img  id="{{product.objectId}}" ez-plus 
+						      ezp-model="product.imageForGallery"
+						      ezp-options="{ easing: true ,  zoomWindowPosition: 1, scrollZoom: true,  initial: 'large'}" >
+					   </img> 
+    </td></tr>
+				<tr><td style="height: 65px;"><span ng-if="competitor=='coldstorage' || competitor=='watsons'" >{{product.brand}} </span> {{product.title}} {{product.size}}</td></tr>
+				<tr><td>{{product.price}}</td></tr>
+				<tr><td>%</td></tr>
+				<tr><td>.</td></tr>
+				<tr><td><a href="{{product.link}}" target="_blank">link</a></td></tr>
+				<tr><td>Not Matched ??  <input type="radio" name="{{product.objectId}}" ng-click="onradio($event,this,true)"></td></tr>
+			</table>
+	    </td>	    
+	    
+		<td ng-repeat="redmartProduct in product.matchedRedmartProducts"> 
+			<table class="tableclass">
+				<tr><td><img    ez-plus 
+
+						      ezp-model="redmartProduct.imageForGallery"
+						      ezp-options="{ easing: true, scrollZoom: true,  initial: 'large'}" >
+					   </img> 
+
+					   </td></tr>
+				<tr><td style="height: 65px;">{{redmartProduct.redmartCatalog.title }} {{redmartProduct.redmartCatalog.measure.wtOrVol}} </td></tr>
+				<tr><td>${{redmartProduct.redmartCatalog.pricing.price}}</td></tr>
+				<tr><td>%{{redmartProduct.percentage}}</td></tr>
+				<tr><td> Matched ??  <input type="radio" name="{{product.objectId}}" ng-click="onradio($event,this,false)"></td></tr>
+				<tr><td><a href="https://redmart.com/product/{{redmartProduct.redmartCatalog.details.uri}}" target="_blank">link</a></td></tr>
+			</table>
+		</td>
+		
+	</tr>
+</table>
+	
+</div>
+<br/>
+<div id="buttons">
+<input type="submit" value="Submit" ng-click="onSave()">
+<input type="submit" value="Logout" style="float: right;" ng-click="onExit()">
+</div>
+</div>

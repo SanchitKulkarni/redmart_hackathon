@@ -1,0 +1,18 @@
+table{
+  width:100%;
+}
+
+td{
+  width:auto;
+}
+
+.leftContainer{
+  width:15%;
+  background-color:#efefef;
+  display:inline-block;
+}
+
+.rightContainer{
+  width:70%;
+    display:inline-block;
+}

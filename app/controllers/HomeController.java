@@ -28,14 +28,17 @@ public class HomeController extends Controller {
 	 * path of <code>/</code>.
 	 */
 	public Result index() {
-		return ok(index.render("Your new application is ready."));
+		return ok(views.html.index.render());
 	}
 
 	public Result getProduct() {
 		JsonNode json = request().body().asJson();
 		String status = json.get("status").textValue();
-		if (status == "taken") {
+		Logger.info(status);
+		if (status.equals("taken")) {
+			Logger.info("reached here");
 			for (JsonNode json1 : json.withArray("data")) {
+
 				String barcode = json1.get("barcode").textValue();
 				Logger.info(barcode);
 				String date = json1.get("date").textValue();

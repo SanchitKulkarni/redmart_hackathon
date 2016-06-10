@@ -1,0 +1,21 @@
+ <div class="leftContainer">
+    Hello
+</div>
+<div class="rightContainer"> 
+  <table>
+    <tr> 
+      <td>RPC</td>
+      <td>Barcode</td>
+      <td>Date Picture Taken</td>
+      <td>Date Edited</td>
+      <td>Completed</td>
+    </tr>
+    <tr ng-repeat="product in products" >
+      <td>{{product.rpc}}</td>
+      <td>{{product.productId}}</td>
+      <td>{{product.photoTakenDate}}</td> 
+      <td>{{date}}</td>
+      <td><input type="radio" name="{{product.productId}}" ng-click="onradio($event,this,false)"></td>
+    </tr>
+  </table>
+</div>  

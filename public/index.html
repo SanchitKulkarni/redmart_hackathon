@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Image progress checker</title>
+        <link rel="stylesheet" media="screen" href="css/app.css">
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+        <script type="text/javascript">
+          var require = {
+            baseUrl: "js"
+          };
+        </script>
+        <script data-main="main" src="js/libs/require.js"></script>
+
+    </head>
+     <body>
+        <div id="container">
+            <div ui-view></div>
+        </div>
+
+        <div id="overlay">
+            <img id="loadingSpinner" src="images/spinner.gif">
+        </div>
+    </body>
+</html>

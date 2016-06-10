@@ -1,0 +1,35 @@
+ <div class="leftContainer">
+    Hello
+</div>
+<div class="rightContainer">
+  <table>
+    <tr>
+      <td>Upload Sheet</td>
+        <td><ng-csv-import 
+        class="import"
+        content="csv.content"
+        header="csv.header" 
+        header-visible="csv.headerVisible" 
+        separator="csv.separator"
+        separator-visible="csv.separatorVisible"
+        result="csv.result" 
+        callback="toPrettyJSON"
+        encoding="csv.encoding"
+        encoding-visible="csv.encodingVisible"></ng-csv-import> 
+      </td>
+       
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>Image Name</td>
+      <td>Bar code</td>
+      <td>Date Taken</td>
+    </tr>
+    <tr ng-repeat="product in csv.result" >
+      <td>{{product.image}}</td>
+      <td>{{product.barcode}}</td>
+      <td>{{product.date}}</td> 
+    </tr>
+  </table>
+</div>  
