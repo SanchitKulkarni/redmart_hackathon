@@ -3,7 +3,6 @@ package models;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Property;
 
-import java.util.*;
 @Entity("salsify")
 public class ProductInfo {
 	@Property("Selling Unit Barcode")

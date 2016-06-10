@@ -75,7 +75,18 @@ public class HomeController extends Controller {
 		}
 		return ok();
 	}
+	public Result getAllProducts(){
+		JsonNode node=null;
 
+		Query<ProductInfo> prod = MorphiaObject.datastore.find(ProductInfo.class);
+		prod.and(prod.criteria("Photo Taken").equal(true), prod.criteria("Photo Edited").equal(true),
+				prod.criteria("Photo Uploaded").equal(true));
+//		if(prod.field("Product ID").exists() != null){
+//		prod.order("Product ID");
+//		node = Json.toJson(prod.asList());
+//		}
+		return ok(node).as("application/json");
+	}
 	public Result getNonEditedProducts() {
 		boolean var = request().getQueryString("edited").equals("false");
 		JsonNode node = null;
